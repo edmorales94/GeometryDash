@@ -10,6 +10,7 @@ public abstract class HandleCharacter {
 	
 	static int angle;//angle where the character will be facing 
 	
+	static int velocity = 15;
 	static double fallingSpeed = 0;
 	double gravity = 2;
 	
@@ -31,8 +32,14 @@ public abstract class HandleCharacter {
 		this.angle = angle;
 	}
 
-//---------- abstract methods --------------------------------------------------------------------------------------------------
+/*******************************************************************************************************************************************************
+ *getAllXCoordinates is a 2D array used to store all of the x-coordinates used to design the character
+ */
 	public abstract int[][] getAllXCoordinates();
+	
+/*******************************************************************************************************************************************************
+ *getAllXCoordinates is a 2D array used to store all of the y-coordinates used to design the character
+ */
 	public abstract int[][] getAllYCoordinates();
 
 /*******************************************************************************************************************************************************
@@ -52,7 +59,7 @@ public abstract class HandleCharacter {
  * every time this function is called by a fixed amount of ints
  */
 	public void moveForward(){
-		x += 15;
+		x += velocity;
 	}
 
 /*******************************************************************************************************************************************************
@@ -74,12 +81,13 @@ public abstract class HandleCharacter {
 		fallingSpeed += gravity;//we add gravity(positive) to fallingSpeed(negative)
 		y += fallingSpeed;//change y value according to fallingSpeed
 		//falling speed starts negative but it later becomes positive, so y goes up and down
-		if(y > 900){//if the y position is higher than 900
+		
+		/*if(y > 900){//if the y position is higher than 900
 			y = 900;//set it back to initial position
 			fallingSpeed = 0;//no more "force" on the y coordinate
 			onGround = true;//back on the ground again
 			canRotate = true;//once on the ground, it can rotate at the moment of jumping
-		}
+		}*/
 	}
 	
 /*******************************************************************************************************************************************************
@@ -97,8 +105,8 @@ public abstract class HandleCharacter {
 		double sinAngle = Lookup.sin[angle];//will help to set the correct y-value for the polygon
 		
 		Color color = null;//color for each polygon will be different
-		g.drawString("This is x: " +x+ "and y: " + y,(int)(x),(int)(y));
-		g.fillOval((int)(x),(int)( y), 5, 5);
+		//g.drawString("This is x: " +x+ "and y: " + y,(int)(x),(int)(y));
+		//g.fillOval((int)(x),(int)( y), 5, 5);
 		for(int polygon = 0; polygon < allXCoordinates.length; polygon++){//go through all elements inside the array
 			xPoints = new int[allXCoordinates[polygon].length];//the number of x-coordinates depends on the number of elements of each polygon
 			yPoints = new int[allYCoordinates[polygon].length];//the number of y-coordinates depends on the number of elements of each polygon
