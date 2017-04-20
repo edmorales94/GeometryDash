@@ -1,15 +1,17 @@
 package Dash;
 
-import java.awt.Graphics;
+import java.awt.Canvas;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 
-public abstract class GamePanel extends JPanel implements KeyListener, Runnable{
+import javax.swing.JFrame;
+
+public abstract class GamePanel extends Canvas implements MouseListener,KeyListener,Runnable{
 	/**
 	 * 
 	 */
@@ -17,15 +19,14 @@ public abstract class GamePanel extends JPanel implements KeyListener, Runnable{
 	
 	JFrame frame;//needed for a fullScreen
 	BufferStrategy flipPages;//needed for Page Flipping approach 
-	
+		
 	boolean paused = false;
 	boolean finished = false;
-	boolean rotatePlayer = false;
 	Thread gameThread;
 	
 	boolean[] input = new boolean[1024];
 	public final static int up = KeyEvent.VK_UP;
-
+	
 //---------- set FullScreen method --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	public void setFullScreen(){
 		GraphicsEnvironment environment = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -34,14 +35,15 @@ public abstract class GamePanel extends JPanel implements KeyListener, Runnable{
 		frame.add(this);
 		frame.setUndecorated(true);//doesn't dispay borders and title bar
 		screen.setFullScreenWindow(frame);//set the frame to fullScreen
-		
-		frame.createBufferStrategy(3);//creating 3 buffers for page flipping technique
-		flipPages = frame.getBufferStrategy();//get a reference of the bufferStrategy created
+				
+		this.createBufferStrategy(3);//creating 3 buffers for page flipping technique
+		//flipPages = getBufferStrategy();//get a reference of the bufferStrategy created
 	}
 	
 //---------- start Frame ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	public void startFrame(){
 		addKeyListener(this);// Attach the KeyListener to the JPanel in order to monitor keypresses
+		addMouseListener(this);
 		setFocusable(true);//KeyEvent will only be dispatched to the panel if it is "focusable"	
 		setFullScreen();//Set the screen
 		
@@ -72,11 +74,16 @@ public abstract class GamePanel extends JPanel implements KeyListener, Runnable{
 		if(KeyEvent.VK_Q == code) finished = true;
 		if(KeyEvent.VK_P == code) paused = true;
 		if(KeyEvent.VK_C == code) paused = false;
-		if(KeyEvent.VK_UP == code) rotatePlayer = true;
 		
 		input[code] = true;
 	}
 
+//---------- mousePressed -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	@Override
+	public void mousePressed(MouseEvent e) {
+		HandleCharacter.rotate();
+		HandleCharacter.startToJump();
+	}
 //---------- keyReleased ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	@Override
 	public void keyReleased(KeyEvent e) {
@@ -84,6 +91,11 @@ public abstract class GamePanel extends JPanel implements KeyListener, Runnable{
 		input[code] = false;
 	}
 	
+//---------- mouseReleased ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	@Override
+	public void mouseReleased(MouseEvent e) {
+
+	}
 //---------- preGame loop -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	public void preGameLoop(){}
 	
@@ -103,13 +115,11 @@ public abstract class GamePanel extends JPanel implements KeyListener, Runnable{
 	public void postGameLoop(){}
 	
 //---------- paint ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	public abstract void draw(Graphics g);
+	public abstract void draw();	
+	
 //---------- update display ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	public void update(){
-		Graphics g = flipPages.getDrawGraphics();
-		draw(g);
-		g.dispose();
-		flipPages.show();
+	public void updateDisplay(){
+		draw();
 	}
 //---------- run method called by gameThread.start() --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	@Override
@@ -118,16 +128,23 @@ public abstract class GamePanel extends JPanel implements KeyListener, Runnable{
 		while(!finished){
 			if(!paused)
 				inGameLoop();
-				update();
+				updateDisplay();
 				sleepGameThread(15);
 		}
 		postGameLoop();
 		System.exit(0);
 	}
 
-//---------- keyTyped ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//---------- non-used methods ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	@Override
-	public void keyTyped(KeyEvent e) {
+	public void keyTyped(KeyEvent e) {}
 	
-	}
+	@Override
+	public void mouseClicked(MouseEvent e) {}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {}
+
+	@Override
+	public void mouseExited(MouseEvent e) {}
 }
