@@ -28,7 +28,7 @@ public class Player extends HandleCharacter{
 	public int[][] getAllYCoordinates() {
 		int[][] allYCoordinates = 
 			{ 
-			 {-90,-40,-40,-90,90,90},//y-coordinates for the head
+			 {-100,-40,-40,-100,100,100},//y-coordinates for the head
 			 {-12,0,12,0},//y-coordinates for left eye
 			 {-12,0,12,0},//y-coordinates for right eye
 			 {30,55,30,60,55,85,85,55,60},//x-coordinates for the skin section
@@ -36,14 +36,9 @@ public class Player extends HandleCharacter{
 		};
 		return allYCoordinates;
 	}
-	
 //---------- draw method ------------------------------------------------------------------------------------------------------------------------
 	public void draw(Graphics g){
 		super.draw(g);
 	}
 }
 
-
-
-//Arianna.FloresPerez14@bcacad.local
-//112314114
