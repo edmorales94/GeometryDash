@@ -14,7 +14,6 @@ public abstract class HandleCharacter {
 	static double fallingSpeed = 0;
 	double gravity = 2;
 	
-	double currentTime = System.currentTimeMillis();
 	static boolean onGround = false;
 	static boolean canRotate = false;
 	
@@ -67,7 +66,7 @@ public abstract class HandleCharacter {
  */
 	public static void startToJump(){
 		if(onGround){//if character is on ground,the falling speed changes to negative value
-			fallingSpeed = -30.0;//it is negative so y-coordinate goes down("up")
+			fallingSpeed = -35;//it is negative so y-coordinate goes down("up")
 			canRotate = false;//while jumping, you can't rotate anymore
 			onGround = false;//you are not longer on the ground
 		}
@@ -105,8 +104,7 @@ public abstract class HandleCharacter {
 		double sinAngle = Lookup.sin[angle];//will help to set the correct y-value for the polygon
 		
 		Color color = null;//color for each polygon will be different
-		//g.drawString("This is x: " +x+ "and y: " + y,(int)(x),(int)(y));
-		//g.fillOval((int)(x),(int)( y), 5, 5);
+		
 		for(int polygon = 0; polygon < allXCoordinates.length; polygon++){//go through all elements inside the array
 			xPoints = new int[allXCoordinates[polygon].length];//the number of x-coordinates depends on the number of elements of each polygon
 			yPoints = new int[allYCoordinates[polygon].length];//the number of y-coordinates depends on the number of elements of each polygon
