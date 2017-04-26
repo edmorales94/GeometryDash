@@ -10,8 +10,10 @@ public class Game extends GamePanel{
 	 */
 	private static final long serialVersionUID = 1L;
 //---------- instances- -----------------------------------------------------------------------------------------------------------------
-	Player batman = new Player(100, 900,0);
-	Floor floor = new Floor(0,1000,3000,1000);
+	Player Batman = new Player(-300, 200,0);
+	Floor floor = new Floor(0,1100,3000,1100);
+	Obstacle obstacle1 = new Obstacle(500,900,300,200);
+	Obstacle obstacle2 = new Obstacle(1400,900,200,200);
 	
 /***************************************************************************************************************************************
  * startTheGame calls a method in GamePanel that sets up the screen
@@ -25,8 +27,8 @@ public class Game extends GamePanel{
  */
 	@Override
 	public void respondToInput() {
-		batman.moveForward();
-		batman.jump();
+		Batman.moveForward();
+		Batman.jump();
 	}
 
 /****************************************************************************************************************************************
@@ -34,7 +36,9 @@ public class Game extends GamePanel{
  */
 	@Override
 	public void handleCollisions() {
-		floor.keepPlayerOnTheGround(batman);;
+		floor.keepPlayerOnTheGround(Batman);
+		obstacle1.collisionDetection(Batman);
+		obstacle2.collisionDetection(Batman);
 	}
 	
 /****************************************************************************************************************************************
@@ -50,8 +54,10 @@ public class Game extends GamePanel{
 		
 		Graphics g = flipPages.getDrawGraphics();//get the graphics object
 		super.update(g);//The canvas is first cleared by filling it with the background color, and then completely redrawn by calling this canvas's paint method
-		batman.draw(g);
+		Batman.draw(g);
 		floor.draw(g);
+		obstacle1.draw(g);
+		obstacle2.draw(g);
 		
 		g.dispose();
 		flipPages.show();
