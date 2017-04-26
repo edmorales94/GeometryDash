@@ -36,12 +36,11 @@ public class Floor {
 		double distance = (((Batman.x - x1)*yVector)-((Batman.y - y1)*xVector));
 		
 		if(distance <= 100){
-			Batman.y = 900;
+			Batman.y = this.y1-100;
 			Batman.fallingSpeed = 0;
 			Batman.onGround = true;
 			Batman.canRotate = true;
 		}
-		//System.out.println(distance);
 	}
 	
 /********************************************************************************************************************************************
