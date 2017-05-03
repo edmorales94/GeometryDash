@@ -2,6 +2,11 @@ package Dash;
 
 import java.awt.*;
 
+/**
+ * 
+ * @author Edgar Morales
+ *
+ */
 public abstract class HandleCharacter {
 	
 	double x;// x-coordinate where the character will be placed
@@ -58,7 +63,7 @@ public abstract class HandleCharacter {
  * every time this function is called by a fixed amount of ints
  */
 	public void moveForward(){
-		x += velocity;
+		x += velocity;//adding velocity(values) to the x-coordinate
 	}
 
 /*******************************************************************************************************************************************************
@@ -100,7 +105,7 @@ public abstract class HandleCharacter {
 		int[] xPoints;//array to place the x-coordinates of each polygon composing the head individually
 		int[] yPoints;//array to place the y-coordinates of each polygon composing the head individually
 		
-		double cosAngle = Lookup.cos[angle];//will help to set the correct x-value for the position
+		double cosAngle = Lookup.cos[angle];//will help to set the correct x-value for the polygon
 		double sinAngle = Lookup.sin[angle];//will help to set the correct y-value for the polygon
 		
 		Color color = null;//color for each polygon will be different
@@ -109,8 +114,8 @@ public abstract class HandleCharacter {
 			xPoints = new int[allXCoordinates[polygon].length];//the number of x-coordinates depends on the number of elements of each polygon
 			yPoints = new int[allYCoordinates[polygon].length];//the number of y-coordinates depends on the number of elements of each polygon
 			for(int vertex = 0; vertex < allXCoordinates[polygon].length; vertex++){//go through each elements of this current element in the main array
-				xPoints[vertex] = (int)(allXCoordinates[polygon][vertex]*cosAngle - allYCoordinates[polygon][vertex]*sinAngle + x);
-				yPoints[vertex] = (int)(allXCoordinates[polygon][vertex] * sinAngle + allYCoordinates[polygon][vertex]*cosAngle + y);
+				xPoints[vertex] = (int)(allXCoordinates[polygon][vertex]*cosAngle - allYCoordinates[polygon][vertex]*sinAngle + x-Camera.x);
+				yPoints[vertex] = (int)(allXCoordinates[polygon][vertex] * sinAngle + allYCoordinates[polygon][vertex]*cosAngle + y-Camera.y);
 			}
 			
 			//depending on which polygon we are, we choose its color
