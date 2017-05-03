@@ -3,6 +3,11 @@ package Dash;
 import java.awt.Color;
 import java.awt.Graphics;
 
+/**
+ * 
+ * @author Edgar Morales
+ *
+ */
 public class Obstacle{//Obstacle is going to be a rectangle
 	
 	int x;//x-coordinate of left upper corner where the origen for the obstacle will be
@@ -43,6 +48,7 @@ public class Obstacle{//Obstacle is going to be a rectangle
  */
 	@SuppressWarnings("static-access")
 	public void collisionDetection(Player Batman){
+
 		//measuring the distance between Batman and the side of the obstacle
 		double distanceToTheSide = (((Batman.x - x)*leftSideVectorY)-((Batman.y - y)*leftSideVectorX));
 		
@@ -50,8 +56,9 @@ public class Obstacle{//Obstacle is going to be a rectangle
 		double distanceToTheUpperSide = (((Batman.x-x)*upperSideVectorY)-((Batman.y-y)*upperSideVectorX));
 		
 		//if the character is colliding with the left side wall, and is to the left of the wall, and at the same height of the obstacle
-		if(distanceToTheSide <= 100 && distanceToTheSide >=0 && (Batman.y-100) >= this.y){
+		if(Batman.x+100 <= 100 && distanceToTheSide >=0 && (Batman.y-100) >= this.y){
 			Batman.velocity = 0;//then he can no longer move forward(it will instead explode later on)
+			System.out.println(distanceToTheSide);
 		}
 		
 		//if character's passed the obstacle origen, and hasn't gone beyond the end point of obstacle
@@ -79,7 +86,7 @@ public class Obstacle{//Obstacle is going to be a rectangle
  */
 	public void draw(Graphics g){
 		g.setColor(Color.black);
-		g.fillRect(x, y, width, height);
+		g.fillRect((int)(x-Camera.x), y, width, height);
 		}
 }
 
