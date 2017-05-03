@@ -2,6 +2,11 @@ package Dash;
 
 import java.awt.Graphics;
 
+/**
+ * 
+ * @author Edgar Morales
+ *
+ */
 public class Player extends HandleCharacter{
 
 //---------- constrcutor ------------------------------------------------------------------------------------------------------------------------
