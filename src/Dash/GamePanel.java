@@ -11,6 +11,11 @@ import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
 
+/**
+ * 
+ * @author Edgar Morales
+ *
+ */
 public abstract class GamePanel extends Canvas implements MouseListener,KeyListener,Runnable{
 	/**
 	 * 
@@ -37,7 +42,6 @@ public abstract class GamePanel extends Canvas implements MouseListener,KeyListe
 		screen.setFullScreenWindow(frame);//set the frame to fullScreen
 				
 		this.createBufferStrategy(3);//creating 3 buffers for page flipping technique
-		//flipPages = getBufferStrategy();//get a reference of the bufferStrategy created
 	}
 	
 //---------- start Frame ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
