@@ -3,6 +3,11 @@ package Dash;
 import java.awt.Color;
 import java.awt.Graphics;
 
+/**
+ * 
+ * @author Edgar Morales
+ *
+ */
 public class Floor {
 	int x1;//x-coordinate for the beginning of the floor
 	int y1;//y-coordinate for the beginning of the floor
