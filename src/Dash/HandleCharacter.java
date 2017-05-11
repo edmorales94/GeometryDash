@@ -7,7 +7,7 @@ import java.awt.*;
  * @author Edgar Morales
  *
  */
-public abstract class HandleCharacter {
+public abstract class HandleCharacter extends collisionBox{
 	
 	double x;// x-coordinate where the character will be placed
 	double y;// y-coordinate where the character will be placed
@@ -31,6 +31,7 @@ public abstract class HandleCharacter {
  */
 	@SuppressWarnings("static-access")
 	public HandleCharacter(double x, double y, int angle){
+		super((int)(x-100),(int)(y-100), 200, 200, angle);
 		this.x = x;
 		this.y = y;
 		this.angle = angle;
@@ -64,6 +65,7 @@ public abstract class HandleCharacter {
  */
 	public void moveForward(){
 		x += velocity;//adding velocity(values) to the x-coordinate
+		this.moveForwardCollisionBox(velocity);
 	}
 
 /*******************************************************************************************************************************************************
@@ -84,6 +86,7 @@ public abstract class HandleCharacter {
 	public void jump(){
 		fallingSpeed += gravity;//we add gravity(positive) to fallingSpeed(negative)
 		y += fallingSpeed;//change y value according to fallingSpeed
+		this.setBoxY(this.y-100);
 		//falling speed starts negative but it later becomes positive, so y goes up and down
 		
 		/*if(y > 900){//if the y position is higher than 900
@@ -109,7 +112,7 @@ public abstract class HandleCharacter {
 		double sinAngle = Lookup.sin[angle];//will help to set the correct y-value for the polygon
 		
 		Color color = null;//color for each polygon will be different
-		
+		super.draw(g);
 		for(int polygon = 0; polygon < allXCoordinates.length; polygon++){//go through all elements inside the array
 			xPoints = new int[allXCoordinates[polygon].length];//the number of x-coordinates depends on the number of elements of each polygon
 			yPoints = new int[allYCoordinates[polygon].length];//the number of y-coordinates depends on the number of elements of each polygon
