@@ -28,14 +28,21 @@ public class collisionBox {
 	
 /*************************************************************************************************************************************************************************
  * This method checks if another rectangle has collides with this rectangle
- * @param r
- * @return
+ * @param collisionBox
+ * @return true;
  */
 	public boolean hasCollidedWith(collisionBox otherBox){
-		if(otherBox.x + otherBox.w >= x && otherBox.y >= y){
+		if(otherBox.x < this.x && otherBox.x + otherBox.w >= x && otherBox.y >= y){			
+			otherBox.x = this.x - 100;
 			return true;
 		}
 		else if(otherBox.x + otherBox.w >= this.x + this.w && otherBox.y < this.y){
+		//	System.out.println("on top");
+			return false;
+		}
+		
+		else if(otherBox.x > this.x + this.w && otherBox.y == this.y){
+		//	System.out.println("past the obstacle");
 			return false;
 		}
 		else{
@@ -56,8 +63,8 @@ public class collisionBox {
  * Function used for other classes to adjust the box y-coordinate
  * @param y2
  */
-	public void setBoxY(double y2){
-		this.y = y2;
+	public void setBoxY(double y){
+		this.y = y;
 	}
 	
 /*************************************************************************************************************************************************************************
