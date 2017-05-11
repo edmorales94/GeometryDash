@@ -10,7 +10,7 @@ import java.awt.*;
 public abstract class HandleCharacter extends collisionBox{
 	
 	double x;// x-coordinate where the character will be placed
-	double y;// y-coordinate where the character will be placed
+	static double y;// y-coordinate where the character will be placed
 		
 	
 	static int angle;//angle where the character will be facing 
@@ -22,6 +22,8 @@ public abstract class HandleCharacter extends collisionBox{
 	static boolean onGround = false;
 	static boolean canRotate = false;
 	
+	boolean collided = false;
+	
 	int[][] allXCoordinates = getAllXCoordinates();// contains all Xs of each polygon
 	int[][] allYCoordinates = getAllYCoordinates();// contains all Ys of each polygon
 	
@@ -31,7 +33,7 @@ public abstract class HandleCharacter extends collisionBox{
  */
 	@SuppressWarnings("static-access")
 	public HandleCharacter(double x, double y, int angle){
-		super((int)(x-100),(int)(y-100), 200, 200, angle);
+		super((int)(x-50),(int)(y-50), 100, 100, angle);
 		this.x = x;
 		this.y = y;
 		this.angle = angle;
@@ -83,10 +85,11 @@ public abstract class HandleCharacter extends collisionBox{
  * jump will add negative and positive numbers to the y coordinate to make it look
  * like the character is jumping
  */
+	@SuppressWarnings("static-access")
 	public void jump(){
 		fallingSpeed += gravity;//we add gravity(positive) to fallingSpeed(negative)
 		y += fallingSpeed;//change y value according to fallingSpeed
-		this.setBoxY(this.y-100);
+		this.setBoxY(this.y-50);
 		//falling speed starts negative but it later becomes positive, so y goes up and down
 		
 		/*if(y > 900){//if the y position is higher than 900
@@ -112,7 +115,7 @@ public abstract class HandleCharacter extends collisionBox{
 		double sinAngle = Lookup.sin[angle];//will help to set the correct y-value for the polygon
 		
 		Color color = null;//color for each polygon will be different
-		super.draw(g);
+		//super.draw(g);//this a call to draw the collisionBox
 		for(int polygon = 0; polygon < allXCoordinates.length; polygon++){//go through all elements inside the array
 			xPoints = new int[allXCoordinates[polygon].length];//the number of x-coordinates depends on the number of elements of each polygon
 			yPoints = new int[allYCoordinates[polygon].length];//the number of y-coordinates depends on the number of elements of each polygon
