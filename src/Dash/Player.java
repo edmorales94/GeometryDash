@@ -19,11 +19,11 @@ public class Player extends HandleCharacter{
 	public int[][] getAllXCoordinates() {
 		int [][] allXCoordinates = 
 			{ 
-			  {-100,-30,30,100,100,-100},//x-coordinates for the head
-			  {-48,-18,-48,-63},//x-coordinates for left eye
-			  {48,18,48,63},//x-coordinates for right eye
-			  {-75,0,75,75,65,65,-65,-65,-75},//x-coordinates for the skin section
-			  {-55,55,55,-55}
+			  {-50,-30,30,50,50,-50},//x-coordinates for the head
+			  {-24,-9,-24,-32},//x-coordinates for left eye
+			  {24,9,24,32},//x-coordinates for right eye
+			  {-38,0,38,38,33,33,-33,-33,-38},//x-coordinates for the skin section
+			  {-28,28,28,-28}
 			};
 		return allXCoordinates;
 	}
@@ -33,11 +33,11 @@ public class Player extends HandleCharacter{
 	public int[][] getAllYCoordinates() {
 		int[][] allYCoordinates = 
 			{ 
-			 {-100,-40,-40,-100,100,100},//y-coordinates for the head
-			 {-12,0,12,0},//y-coordinates for left eye
-			 {-12,0,12,0},//y-coordinates for right eye
-			 {30,55,30,60,55,85,85,55,60},//x-coordinates for the skin section
-			 {67,67,68,68}
+			 {-50,-20,-20,-50,50,50},//y-coordinates for the head
+			 {-6,0,6,0},//y-coordinates for left eye
+			 {-6,0,6,0},//y-coordinates for right eye
+			 {15,28,15,30,28,42,42,28,30},//x-coordinates for the skin section
+			 {35,35,36,36}
 		};
 		return allYCoordinates;
 	}
