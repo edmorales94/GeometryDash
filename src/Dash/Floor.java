@@ -40,9 +40,9 @@ public class Floor {
 	public void keepPlayerOnTheGround(Player Batman){
 		double distance = (((Batman.x - x1)*yVector)-((Batman.y - y1)*xVector));
 		
-		if(distance <= 100){//if the edge of the character is touching the floor
-			Batman.y = this.y1-100;//change its height to be lower than the floor
-			Batman.setBoxY(this.y1 -200);
+		if(distance <= 50){//if the edge of the character is touching the floor
+			Batman.y = this.y1-50;//change its height to be lower than the floor
+			Batman.setBoxY(this.y1 -100);
 			Batman.fallingSpeed = 0;//since the character is touching the floor, he doesnt fall anymore
 			Batman.onGround = true;//character is on a solid ground
 			Batman.canRotate = true;//can rotate again
