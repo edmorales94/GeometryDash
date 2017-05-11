@@ -20,7 +20,7 @@ public class Game extends GamePanel{
 	Player Batman = new Player(-200,800,0);
 	Floor floor = new Floor(0,1100,3000,1100);
 	Obstacle obstacle1 = new Obstacle(2200,900,300,200);
-	Obstacle obstacle2 = new Obstacle(3700,900,500,200);
+	//Obstacle obstacle2 = new Obstacle(3700,900,500,200);
 	
 /***************************************************************************************************************************************
  * startTheGame calls a method in GamePanel that sets up the screen
@@ -53,7 +53,7 @@ public class Game extends GamePanel{
 	public void handleCollisions() {
 		floor.keepPlayerOnTheGround(Batman);
 		obstacle1.collisionDetection(Batman);
-		obstacle2.collisionDetection(Batman);
+		//obstacle2.collisionDetection(Batman);
 	}
 	
 /****************************************************************************************************************************************
@@ -74,11 +74,10 @@ public class Game extends GamePanel{
 		Batman.draw(g);
 		//floor.draw(g);
 		obstacle1.draw(g);
-		obstacle2.draw(g);
+		//obstacle2.draw(g);
 		
 		g.dispose();
 		flipPages.show();
-		//Toolkit.getDefaultToolkit().sync();
 	}
 	
 /****************************************************************************************************************************************
