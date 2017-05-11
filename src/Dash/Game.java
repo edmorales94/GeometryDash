@@ -16,11 +16,11 @@ public class Game extends GamePanel{
 	private static final long serialVersionUID = 1L;
 //---------- instances- -----------------------------------------------------------------------------------------------------------------
 	ImageLayer background = new ImageLayer("background.jpg", 0,0,8,800);
-	ImageLayer realFloor = new ImageLayer("floor.png",0,1100,1,2000);
-	Player Batman = new Player(-200,800,0);
-	Floor floor = new Floor(0,1100,3000,1100);
-	Obstacle obstacle1 = new Obstacle(2200,900,300,200);
-	//Obstacle obstacle2 = new Obstacle(3700,900,500,200);
+	ImageLayer realFloor = new ImageLayer("floor.png",0,700,1,2000);
+	Player Batman = new Player(-200,0,0);
+	Floor floor = new Floor(0,700,3000,700);
+	Obstacle obstacle1 = new Obstacle(1000,550,800,150);
+	Obstacle obstacle2 = new Obstacle(3700,500,500,200);
 	
 /***************************************************************************************************************************************
  * startTheGame calls a method in GamePanel that sets up the screen
@@ -33,17 +33,20 @@ public class Game extends GamePanel{
  * respondToInput is used to determine what to do when the user presses keys or mouse
  */
 	@Override
-	public void respondToInput() {
-		if(Batman.x-900 > 0 && Batman.x-900 < 400){
+	public void handleMovement() {
+		//if Batman is at a certain point and hasn't collided yet. move everything slowly 
+		if(Batman.x-560 > 0 && Batman.x-560 < 400 && !Batman.collided){
 			Camera.movetoTheRight(25);
 			HandleCharacter.velocity = 25;
 		}
-		if(Batman.x-900 >= 400){
-			Camera.movetoTheRight(30);
-			HandleCharacter.velocity = 30;
+		
+		//if Batman is at a certain point and hasn't collided yet. move everything faster
+		if(Batman.x-560 >= 400 && !Batman.collided){
+			Camera.movetoTheRight(28);
+			HandleCharacter.velocity = 28;
 		}
-		Batman.moveForward();
-		Batman.jump();
+		Batman.moveForward();//will move if velocity is not zero(when collides, it changes to zero)
+		Batman.jump();//will jump if Batman is on ground 
 	}
 
 /****************************************************************************************************************************************
@@ -53,7 +56,7 @@ public class Game extends GamePanel{
 	public void handleCollisions() {
 		floor.keepPlayerOnTheGround(Batman);
 		obstacle1.collisionDetection(Batman);
-		//obstacle2.collisionDetection(Batman);
+		obstacle2.collisionDetection(Batman);
 	}
 	
 /****************************************************************************************************************************************
@@ -74,7 +77,7 @@ public class Game extends GamePanel{
 		Batman.draw(g);
 		//floor.draw(g);
 		obstacle1.draw(g);
-		//obstacle2.draw(g);
+		obstacle2.draw(g);
 		
 		g.dispose();
 		flipPages.show();
