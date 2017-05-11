@@ -8,7 +8,7 @@ import java.awt.Graphics;
  * @author Edgar Morales
  *
  */
-public class Obstacle{//Obstacle is going to be a rectangle
+public class Obstacle extends collisionBox{//Obstacle is going to be a rectangle
 	
 	int x;//x-coordinate of left upper corner where the origen for the obstacle will be
 	int y;//y-coordinate of left upper corner where the origen for the obstacle will be
@@ -24,13 +24,14 @@ public class Obstacle{//Obstacle is going to be a rectangle
 	
 //---------- constructor to initialize the origin, width, height, and sides vectors ------------------------------------------------------------------------------------------------------------
 	public Obstacle(int x, int y, int w, int h){
+		super(x,y,w,h,0);
 		this.x = x;
 		this.y = y;
 		width = w;
 		height = h;
 		
 		//applying the Pythagorean Theorem for two order pair of points(http://orion.math.iastate.edu/butler/2012/spring/265/week2_review.pdf)
-		double sideMagnitud = Math.sqrt((x-x)*(x-x)+(y-(y+height))*(y-(y+height)));
+		double sideMagnitud = Math.sqrt((x -x)*(x-x)+(y-(y+height))*(y-(y+height)));
 		leftSideVectorX = ((x-x))/sideMagnitud;
 		leftSideVectorY = (y-(y+height))/sideMagnitud;
 		
@@ -48,17 +49,24 @@ public class Obstacle{//Obstacle is going to be a rectangle
  */
 	@SuppressWarnings("static-access")
 	public void collisionDetection(Player Batman){
-
+		//System.out.println("obstacle\'s x " + x);
 		//measuring the distance between Batman and the side of the obstacle
 		double distanceToTheSide = (((Batman.x - x)*leftSideVectorY)-((Batman.y - y)*leftSideVectorX));
 		
-		//measuring the distance between Batman and the top of the obstacle
 		double distanceToTheUpperSide = (((Batman.x-x)*upperSideVectorY)-((Batman.y-y)*upperSideVectorX));
 		
+		if(this.hasCollidedWith(Batman)){
+			System.out.println("collision");
+			Batman.velocity = 0;//then he can no longer move forward(it will instead explode later on)
+			Camera.movetoTheRight(0);
+		}
+		if(!(this.hasCollidedWith(Batman))){
+			System.out.println("no collision");
+		}
 		//if the character is colliding with the left side wall, and is to the left of the wall, and at the same height of the obstacle
 		if(Batman.x+100 <= 100 && distanceToTheSide >=0 && (Batman.y-100) >= this.y){
 			Batman.velocity = 0;//then he can no longer move forward(it will instead explode later on)
-			System.out.println(distanceToTheSide);
+			Camera.movetoTheRight(0);
 		}
 		
 		//if character's passed the obstacle origen, and hasn't gone beyond the end point of obstacle
@@ -77,7 +85,6 @@ public class Obstacle{//Obstacle is going to be a rectangle
 			Batman.canRotate = false;//he can't rotate anymore
 			Batman.y += Batman.gravity;//make gravity do the falling effect
 		}
-		//System.out.println(distanceToTheUpperSide);
 	}
 	
 /***********************************************************************************************************************************************************************************************
@@ -85,6 +92,8 @@ public class Obstacle{//Obstacle is going to be a rectangle
  * @param g
  */
 	public void draw(Graphics g){
+		g.setColor(Color.GREEN);
+		super.draw(g);
 		g.setColor(Color.black);
 		g.fillRect((int)(x-Camera.x), y, width, height);
 		}
