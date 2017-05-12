@@ -15,17 +15,22 @@ public class Game extends GamePanel{
 	 */
 	private static final long serialVersionUID = 1L;
 //---------- instances- -----------------------------------------------------------------------------------------------------------------
-	ImageLayer background = new ImageLayer("background.jpg", 0,0,8,800);
-	ImageLayer realFloor = new ImageLayer("floor.png",0,700,1,2000);
+	AudioPlayer backgroundMusic;
+	ImageLayer background = new ImageLayer("background.jpg", 0,0,8,800,20);
+	ImageLayer realFloor = new ImageLayer("floor.png",0,700,1,2000,30);
 	Player Batman = new Player(-200,0,0);
-	Floor floor = new Floor(0,700,3000,700);
+	Floor floor = new Floor(0,700,7000,700);
 	Obstacle obstacle1 = new Obstacle(1000,550,800,150);
-	Obstacle obstacle2 = new Obstacle(3700,500,500,200);
+	Obstacle obstacle2 = new Obstacle(3700,500,800,200);
+	Obstacle obstacle3 = new Obstacle(4300,350,200,150);
+	Obstacle obstacle4 = new Obstacle(6000,500,500,200);
 	
 /***************************************************************************************************************************************
  * startTheGame calls a method in GamePanel that sets up the screen
  */
 	public void startTheGame(){
+		backgroundMusic = new AudioPlayer("music/mr.mp3");//this loads the music background
+		backgroundMusic.play();//play the background music
 		startFrame();
 	}
 
@@ -57,6 +62,8 @@ public class Game extends GamePanel{
 		floor.keepPlayerOnTheGround(Batman);
 		obstacle1.collisionDetection(Batman);
 		obstacle2.collisionDetection(Batman);
+		obstacle3.collisionDetection(Batman);
+		obstacle4.collisionDetection(Batman);
 	}
 	
 /****************************************************************************************************************************************
@@ -78,6 +85,8 @@ public class Game extends GamePanel{
 		//floor.draw(g);
 		obstacle1.draw(g);
 		obstacle2.draw(g);
+		obstacle3.draw(g);
+		obstacle4.draw(g);
 		
 		g.dispose();
 		flipPages.show();
