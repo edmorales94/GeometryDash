@@ -39,7 +39,7 @@ public abstract class HandleCharacter extends collisionBox{
 		this.x = x;
 		this.y = y;
 		this.angle = angle;
-		jumpSound = new AudioPlayer("jumpVoice.wav");//load the sound file
+		jumpSound = new AudioPlayer("music/jumpVoice.wav");//load the sound file
 	}
 
 /*******************************************************************************************************************************************************
