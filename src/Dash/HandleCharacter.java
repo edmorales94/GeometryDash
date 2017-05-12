@@ -15,14 +15,16 @@ public abstract class HandleCharacter extends collisionBox{
 	
 	static int angle;//angle where the character will be facing 
 	
-	static int velocity = 15;
-	static double fallingSpeed = 0;
-	double gravity = 2;
+	static int velocity = 15;//velocity to which the character will move initially
+	static double fallingSpeed = 0;//the game hasn't started
+	double gravity = 2;//gravity will help with the jump fucntion
 	
-	static boolean onGround = false;
-	static boolean canRotate = false;
+	static boolean onGround = false;//the character initally starts as a falling object
+	static boolean canRotate = false;//as long as it isn't on the ground, it can't rotate
 	
-	boolean collided = false;
+	boolean collided = false;//boolean need it to stop everything when collision is detected
+	
+	static AudioPlayer jumpSound;//variable used to store the jump sound effect
 	
 	int[][] allXCoordinates = getAllXCoordinates();// contains all Xs of each polygon
 	int[][] allYCoordinates = getAllYCoordinates();// contains all Ys of each polygon
@@ -33,10 +35,11 @@ public abstract class HandleCharacter extends collisionBox{
  */
 	@SuppressWarnings("static-access")
 	public HandleCharacter(double x, double y, int angle){
-		super((int)(x-50),(int)(y-50), 100, 100, angle);
+		super((int)(x-50),(int)(y-50), 100, 100);
 		this.x = x;
 		this.y = y;
 		this.angle = angle;
+		jumpSound = new AudioPlayer("jumpVoice.wav");//load the sound file
 	}
 
 /*******************************************************************************************************************************************************
@@ -75,6 +78,7 @@ public abstract class HandleCharacter extends collisionBox{
  */
 	public static void startToJump(){
 		if(onGround){//if character is on ground,the falling speed changes to negative value
+			jumpSound.play();//play the background music
 			fallingSpeed = -35;//it is negative so y-coordinate goes down("up")
 			canRotate = false;//while jumping, you can't rotate anymore
 			onGround = false;//you are not longer on the ground
