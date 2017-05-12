@@ -24,7 +24,7 @@ public class collisionBox {
 	
 		this.w = w;
 		this.h = h;
-		collidedSound = new AudioPlayer("crash.mp3");//loading the sound
+		collidedSound = new AudioPlayer("music/crash.mp3");//loading the sound
 	}
 	
 /*************************************************************************************************************************************************************************
