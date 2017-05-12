@@ -15,15 +15,16 @@ public class collisionBox {
 	int w;//width for the rectangle
 	int h;//height for the rectangle
 	static int boxAngle;//angle used for the rotation of the rectangle
+	AudioPlayer collidedSound;//variable for the collision sound
 	
 //---------- constructor -------------------------------------------------------------------------------------------------------------------------------------------------
-	public collisionBox(int x,int y, int w, int h, int angle){//constructor must protect the code, what if it was negative??
+	public collisionBox(int x,int y, int w, int h){//constructor must protect the code, what if it was negative??
 		this.x = x;
 		this.y = y;
 	
 		this.w = w;
 		this.h = h;
-		boxAngle = angle;
+		collidedSound = new AudioPlayer("crash.mp3");//loading the sound
 	}
 	
 /*************************************************************************************************************************************************************************
@@ -32,19 +33,30 @@ public class collisionBox {
  * @return true;
  */
 	public boolean hasCollidedWith(collisionBox otherBox){
-		if(otherBox.x < this.x && otherBox.x + otherBox.w >= x && otherBox.y >= y){			
-			otherBox.x = this.x - 100;
+		//if the right upper corner of character's collision box is colliding, then return true
+		if(otherBox.x <= this.x && otherBox.x + otherBox.w >= x && otherBox.y >= y){	
+			collidedSound.play();//play the sound
+			otherBox.x = this.x - 100;//move the collision box backwards so their edges are touching each other
 			return true;
 		}
+		
+		/*if the charcter's collision box's y coordinate are lower than the obstacle's y, 
+		and character's collision box's x coordinate is less than the upper corner of this obstacle
+		character is on top of the obstacle*/
 		else if(otherBox.x + otherBox.w >= this.x + this.w && otherBox.y < this.y){
 		//	System.out.println("on top");
 			return false;
 		}
 		
+		/* if the coordinates of character's collision box has passed 
+		 * the right upper corner of this obstacle
+		 * then the character has moved passed this obstacle*/
 		else if(otherBox.x > this.x + this.w && otherBox.y == this.y){
 		//	System.out.println("past the obstacle");
 			return false;
 		}
+		
+		//character hasn't arrived to this obstacle
 		else{
 			return false;
 		}
@@ -56,12 +68,12 @@ public class collisionBox {
  */
 	public void moveForwardCollisionBox(int d){
 		x += d;
-		y +=  (d * Lookup.sin[boxAngle]);
+		y += d;
 	}
 	
 /*************************************************************************************************************************************************************************
  * Function used for other classes to adjust the box y-coordinate
- * @param y2
+ * @param y
  */
 	public void setBoxY(double y){
 		this.y = y;
