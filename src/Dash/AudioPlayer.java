@@ -37,7 +37,7 @@ public class AudioPlayer {
 /*****************************************************************************************************************************************************************
  * This method stops the file that is playing
  */
-	public void stop(){
+	public void stopAudio(){
 		if(clip.isRunning()){//if the audio is still playing
 			clip.stop();//then stop it
 		}
@@ -46,11 +46,11 @@ public class AudioPlayer {
 /*****************************************************************************************************************************************************************
  * This method will play a file as long as it isn't empty
  */
-	public void play(){
+	public void playAudio(){
 		if(clip == null){//if the file is empty
 			return;//get out of the method
 		}
-		stop();//stop the file that is playing
+		stopAudio();//stop the file that is playing
 		clip.setFramePosition(0);//restart the file
 		clip.start();//start audio again
 	}
@@ -59,7 +59,14 @@ public class AudioPlayer {
  * This stops the audio for good
  */
 	public void closeMusic(){
-		stop();//stop the audio
+		stopAudio();//stop the audio
 		clip.close();//and close it
+	}
+	
+/*****************************************************************************************************************************************************************
+ * Restart music
+ */
+	public void restartAudio(){
+		playAudio();//method stops and replays the audio
 	}
 }
