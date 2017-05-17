@@ -33,4 +33,12 @@ public class Camera {
 	public void moveDown(int deltaY){
 		y+= deltaY;//the camera will go down as its y-coordinate is increasing
 	}
+	
+/***************************************************************************************************************************************************************************
+ * Restart the position of the camera
+ */
+	public static void restartCamera(){
+		x = 0;//set the camera back to its default position
+		y = 0;//set the camera back to its default position
+	}
 }
