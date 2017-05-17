@@ -9,7 +9,6 @@ import java.awt.Graphics;
  */
 
 public class Game extends GamePanel{
-	
 	/**
 	 * 
 	 */
@@ -30,7 +29,7 @@ public class Game extends GamePanel{
  */
 	public void startTheGame(){
 		backgroundMusic = new AudioPlayer("music/mr.mp3");//this loads the music background
-		backgroundMusic.play();//play the background music
+		backgroundMusic.playAudio();//play the background music
 		startFrame();
 	}
 
@@ -50,12 +49,15 @@ public class Game extends GamePanel{
 			Camera.movetoTheRight(28);
 			HandleCharacter.velocity = 28;
 		}
+		if(Batman.x <= 0){
+			HandleCharacter.velocity = 10;
+		}
 		Batman.moveForward();//will move if velocity is not zero(when collides, it changes to zero)
-		Batman.jump();//will jump if Batman is on ground 
+		Batman.fall();//will jump if Batman is on ground 
 	}
 
 /****************************************************************************************************************************************
- * handleCollisions is used to determine what to do when the character collides
+ * handleCollisions is used to check collisions between character and obstacles
  */
 	@Override
 	public void handleCollisions() {
@@ -66,7 +68,23 @@ public class Game extends GamePanel{
 		obstacle4.collisionDetection(Batman);
 	}
 	
-/****************************************************************************************************************************************
+/*****************************************************************************************************************************************
+ * Restart the whole game by seting everything to its default location
+ */
+	public void restartGame(){//restart everything by setting them back to their default positions
+		backgroundMusic.restartAudio();
+		background.restart(0, 0);
+		realFloor.restart(0, 700);
+		Batman.restart(10, 650, 0);
+		floor.restartFloor(0, 700, 1000, 700);
+		obstacle1.restartObstacle(1000, 550);
+		obstacle2.restartObstacle(3700, 500);
+		obstacle3.restartObstacle(4300, 350);
+		obstacle4.restartObstacle(6000, 500);
+		Camera.restartCamera();
+		Batman.collided = false;
+	}
+/*****************************************************************************************************************************************
  * draw calls the update method inherited from GamePanel
  */
 	@Override
@@ -81,12 +99,18 @@ public class Game extends GamePanel{
 		super.update(g);//The canvas is first cleared by filling it with the background color, and then completely redrawn by calling this canvas's paint method
 		background.draw(g);
 		realFloor.draw(g);
-		Batman.draw(g);
-		//floor.draw(g);
-		obstacle1.draw(g);
-		obstacle2.draw(g);
-		obstacle3.draw(g);
-		obstacle4.draw(g);
+		if(!(Batman.collided)){
+			Batman.draw(g);
+			//floor.draw(g);
+			obstacle1.draw(g);
+			obstacle2.draw(g);
+			obstacle3.draw(g);
+			obstacle4.draw(g);
+		}
+		
+		if(Batman.collided){
+			restartGame();
+		}
 		
 		g.dispose();
 		flipPages.show();
