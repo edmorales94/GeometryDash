@@ -42,11 +42,21 @@ public class Floor {
 		
 		if(distance <= 50){//if the edge of the character is touching the floor
 			Batman.y = this.y1-50;//change its height to be lower than the floor
-			Batman.setBoxY(this.y1 -100);
+			Batman.setCollisionBoxHeight(this.y1 -100);
 			Batman.fallingSpeed = 0;//since the character is touching the floor, he doesnt fall anymore
 			Batman.onGround = true;//character is on a solid ground
 			Batman.canRotate = true;//can rotate again
 		}
+	}
+	
+/********************************************************************************************************************************************
+ * Restart floor's position by setting the coordinates back to their default position
+ */
+	public void restartFloor(int x1, int y1, int x2, int y2){
+		this.x1 = x1;//x-coordinate for starting point of the floor
+		this.y1 = y1;//y-coordinate for starting point of the floor
+		this.x2 = x2;//x-coordinate for ending point of the floor
+		this.y2 = y2;//y-coordinate for ending point of the floor
 	}
 	
 /********************************************************************************************************************************************
