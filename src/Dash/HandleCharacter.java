@@ -78,7 +78,7 @@ public abstract class HandleCharacter extends collisionBox{
  */
 	public static void startToJump(){
 		if(onGround){//if character is on ground,the falling speed changes to negative value
-			jumpSound.play();//play the background music
+			jumpSound.playAudio();//play the background music
 			fallingSpeed = -35;//it is negative so y-coordinate goes down("up")
 			canRotate = false;//while jumping, you can't rotate anymore
 			onGround = false;//you are not longer on the ground
@@ -90,10 +90,10 @@ public abstract class HandleCharacter extends collisionBox{
  * like the character is jumping
  */
 	@SuppressWarnings("static-access")
-	public void jump(){
+	public void fall(){
 		fallingSpeed += gravity;//we add gravity(positive) to fallingSpeed(negative)
 		y += fallingSpeed;//change y value according to fallingSpeed
-		this.setBoxY(this.y-50);
+		this.setCollisionBoxHeight(this.y-50);
 		//falling speed starts negative but it later becomes positive, so y goes up and down
 		
 		/*if(y > 900){//if the y position is higher than 900
@@ -104,6 +104,17 @@ public abstract class HandleCharacter extends collisionBox{
 		}*/
 	}
 	
+/*******************************************************************************************************************************************************
+ * Restart character's position and also actualizes its collision box
+ */
+	@SuppressWarnings("static-access")
+	public void restart(double x, double y, int angle){
+		super.restartCollisionBox(x, y);
+		this.x = x;
+		this.y = y;
+		this.angle = angle;
+		velocity = 15;
+	}
 /*******************************************************************************************************************************************************
  * Draw method will handle the position of the x and y coordinates 
  * of each single polygon that composes the face of the character
