@@ -35,7 +35,7 @@ public class collisionBox {
 	public boolean hasCollidedWith(collisionBox otherBox){
 		//if the right upper corner of character's collision box is colliding, then return true
 		if(otherBox.x <= this.x && otherBox.x + otherBox.w >= x && otherBox.y >= y){	
-			collidedSound.play();//play the sound
+			//collidedSound.playAudio();//play the sound
 			otherBox.x = this.x - 100;//move the collision box backwards so their edges are touching each other
 			return true;
 		}
@@ -75,10 +75,17 @@ public class collisionBox {
  * Function used for other classes to adjust the box y-coordinate
  * @param y
  */
-	public void setBoxY(double y){
-		this.y = y;
+	public void setCollisionBoxHeight(double y){
+		this.y = y;//method required to be used in the Floor class
 	}
 	
+/*************************************************************************************************************************************************************************
+ * RestartCollisionBox
+ */
+	public void restartCollisionBox(double x, double y){
+		this.x = x;
+		this.y = y;
+	}
 /*************************************************************************************************************************************************************************
  * Function used to draw the collision box around the objects
  * @param g
