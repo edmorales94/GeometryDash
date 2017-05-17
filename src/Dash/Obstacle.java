@@ -24,7 +24,7 @@ public class Obstacle extends collisionBox{//Obstacle is going to be a rectangle
 	
 //---------- constructor to initialize the origin, width, height, and sides vectors ------------------------------------------------------------------------------------------------------------
 	public Obstacle(int x, int y, int w, int h){
-		super(x,y,w,h,0);
+		super(x,y,w,h);
 		this.x = x;
 		this.y = y;
 		width = w;
@@ -76,18 +76,27 @@ public class Obstacle extends collisionBox{//Obstacle is going to be a rectangle
 		if(Batman.x+50 > x && Batman.x-50 < x+width && 
 				distanceToTheUpperSide <= 50 && distanceToTheUpperSide >= 0){
 			Batman.y = this.y-50;//change the character's height to be on top of the obstacle
-			Batman.setBoxY(this.y-100);
+			Batman.setCollisionBoxHeight(this.y-100);
 			Batman.fallingSpeed = 0;//he's no longer falling
 			Batman.onGround = true;//he's on solid ground again, which means he can jump again
 			Batman.canRotate = true;//he can rotate again too
 		}
 		
 		//if the character has passed the obstacle, then make him fall
-		if(Batman.x - 100 == x+width){
+		if(Batman.x - 50 == x+width){
 			Batman.onGround = false;//he's no longer on solid ground 
 			Batman.canRotate = false;//he can't rotate anymore
 			Batman.y += Batman.gravity;//make gravity do the falling effect
 		}
+	}
+	
+/***********************************************************************************************************************************************************************************************
+ * Restart obstacle
+ */
+	public void restartObstacle(int x, int y){
+		super.restartCollisionBox(x, y);//actualize its collision box too
+		this.x = x;
+		this.y = y;
 	}
 	
 /***********************************************************************************************************************************************************************************************
